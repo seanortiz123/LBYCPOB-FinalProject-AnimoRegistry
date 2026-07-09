@@ -2,19 +2,19 @@ PROJECT TITLE:
 <Your project name>
 
 TEAM MEMBERS:
-<Name 1> - <GitHub username>
-<Name 2> - <GitHub username>
-<Name 3> - <GitHub username>
-(or: Solo Project - <Name> - <GitHub username>)
+Johanna Rae C. Castor  - <GitHub username>
+Gian Gabriel S. Fadriquela - <GitHub username>
+Sean Matthew E. Ortiz - <GitHub username> 
 
 PROBLEM STATEMENT & GOALS:
 <What problem does this solve? What are the main objectives?>
 
 TARGET USER:
-<Who will use this system?>
+- DLSU Students who wants to join an organization
+- DLSU Organizations who wants to recruit new members
 
 BRIEF DESCRIPTION:
-<Summary of purpose and basic functionality>
+The students looking to join an organization can navigate through the website to find which organizations are aligned with their interests. DLSU organizations can add their information and how to join using the website to recruit new members. 
 
 CORE OOP CONCEPTS:
 - Encapsulation: <where/how>
@@ -32,6 +32,6 @@ USER STORIES (Recommended):
 - As a <user type>, I want to <action> so that <goal>.
 
 CORE FEATURES (Recommended):
-- <Feature 1>
-- <Feature 2>
-- <Feature 3>
+- Several webpages to navigate through each organization
+- DLSU organizations able to add their own page
+- Students able to join organization from the page of the organization
