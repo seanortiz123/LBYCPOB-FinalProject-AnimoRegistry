@@ -3,7 +3,7 @@ PROJECT TITLE:
 
 TEAM MEMBERS:
 Johanna Rae C. Castor  - <GitHub username>
-Gian Gabriel S. Fadriquela - <GitHub username>
+Gian Gabriel S. Fadriquela - gianfadriquela-collab
 Sean Matthew E. Ortiz - <GitHub username> 
 
 PROBLEM STATEMENT & GOALS:
