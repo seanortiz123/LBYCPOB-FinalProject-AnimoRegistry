@@ -7,7 +7,8 @@ Gian Gabriel S. Fadriquela - <GitHub username>
 Sean Matthew E. Ortiz - <GitHub username> 
 
 PROBLEM STATEMENT & GOALS:
-<What problem does this solve? What are the main objectives?>
+There are currently no DLSU website that focuses on the recruitment process of organizations. This project aims to create a website that can help organizations recruit new members and students join organizations
+
 
 TARGET USER:
 - DLSU Students who wants to join an organization
