@@ -33,5 +33,5 @@ The students looking to join an organization can navigate through the website to
 
 ## CORE FEATURES (Recommended):
 - Several webpages to navigate through each organization
-- DLSU organizations able to add their own page
+- DLSU organizations able to add their own page and manage applicants
 - Students able to join organization from the page of the organization
