@@ -3,7 +3,7 @@
 ### TEAM MEMBERS:
 1. Johanna Rae C. Castor  - johannacastor
 2. Gian Gabriel S. Fadriquela - gianfadriquela-collab
-3. Sean Matthew E. Ortiz - <GitHub username> 
+3. Sean Matthew E. Ortiz - seanortiz123
 
 ### PROBLEM STATEMENT & GOALS:
 There are currently no DLSU website that focuses on the recruitment process of organizations. This project aims to create a website that can help organizations recruit new members and students join organizations
@@ -27,9 +27,18 @@ The students looking to join an organization can navigate through the website to
 - Organization: Holds student group details, recruitment slots, and active applicants 	
 - ApplicationForm: Manages pending applications and interview answers			
 
-### USER STORIES (Recommended):
-- As a <user type>, I want to <action> so that <goal>.
-- As a <user type>, I want to <action> so that <goal>.
+### USER STORIES:
+(Student)
+- As a DLSU student, I want a one-stop app where I get to see all the available DLSU organizations/clubs that I am able to join
+- As a DLSU student, I want a one-stop app where I'm able to input different needed information for my organization applications like my ID number and DLSU email
+- As a Frosh or Undergraduate student, I want to track the real-time status of my submitted applications (e.g., Pending, Interview Scheduled, Accepted, Rejected) on a personal dashboard so that I know exactly where I stand in the recruitment process.
+
+
+(Organization)
+- As an Organization officer, I want an app where I am able to view different student applications and be able to accept or deny them.
+- As an Executive Board Member, I want to toggle our organization's registration status to "Closed" once the recruitment season is done so that students can no longer submit new sign-up forms.
+- As an Org Officer, I want to set a maximum membership cap for our specific committee during setup so that the app automatically stops accepting new applicants once our slots are completely filled.
+- As a Central Committee Member, I want to edit our organization's profile page (such as updating our logo, social media handles, or org description) so that our digital booth display remains accurate for incoming frosh.
 
 ### CORE FEATURES (Recommended):
 - Several webpages to navigate through each organization
