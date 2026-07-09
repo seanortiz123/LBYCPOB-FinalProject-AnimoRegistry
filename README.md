@@ -2,9 +2,9 @@
 De La Salle University Organization Sign Up Webpage
 
 ## TEAM MEMBERS:
-Johanna Rae C. Castor  - johannacastor
-Gian Gabriel S. Fadriquela - gianfadriquela-collab
-Sean Matthew E. Ortiz - <GitHub username> 
+1. Johanna Rae C. Castor  - johannacastor
+2. Gian Gabriel S. Fadriquela - gianfadriquela-collab
+3. Sean Matthew E. Ortiz - <GitHub username> 
 
 ## PROBLEM STATEMENT & GOALS:
 There are currently no DLSU website that focuses on the recruitment process of organizations. This project aims to create a website that can help organizations recruit new members and students join organizations
