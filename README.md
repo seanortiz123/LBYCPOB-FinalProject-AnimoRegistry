@@ -14,7 +14,7 @@ There are currently no DLSU website that focuses on the recruitment process of o
 - DLSU Organizations who wants to recruit new members
 
 ### BRIEF DESCRIPTION:
-The students looking to join an organization can navigate through the website to find which organizations are aligned with their interests. DLSU organizations can add their information and how to join using the website to recruit new members. 
+The students looking to join an organization can navigate through the website to find which organizations are aligned with their interests. DLSU organizations can add their information and how to join using the website to recruit and manage new members. 
 
 ### CORE OOP CONCEPTS:
 - Encapsulation: <where/how>
