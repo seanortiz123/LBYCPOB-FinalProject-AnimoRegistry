@@ -1,8 +1,8 @@
 PROJECT TITLE:
-<Your project name>
+De La Salle University Organization Sign Up Webpage
 
 TEAM MEMBERS:
-Johanna Rae C. Castor  - <GitHub username>
+Johanna Rae C. Castor  - johannacastor
 Gian Gabriel S. Fadriquela - gianfadriquela-collab
 Sean Matthew E. Ortiz - <GitHub username> 
 
