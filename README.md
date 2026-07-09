@@ -16,11 +16,23 @@ There are currently no DLSU website that focuses on the recruitment process of o
 The students looking to join an organization can navigate through the website to find which organizations are aligned with their interests. DLSU organizations can add their information and how to join using the website to recruit and manage new members. 
 
 ### CORE OOP CONCEPTS:
-- Encapsulation: <where/how>
-- Inheritance: <where/how>
+- Encapsulation:
+  
+DLSU Email Validation: 
+The system encapsulates the email field. A user cannot just type any Gmail address. The setter method checks if the string ends strictly with @dlsu.edu.ph. If it doesn't, it rejects the sign-up.
+
+ID Number Verification:
+The class encapsulates this validation logic inside the setIdNumber() method, ensuring invalid IDs never enter the system
+
+- Inheritance: 
+
+Parent Class (DLSUUser): An abstract class that stores data every single Lasallian shares upon signing up (idNumber, name, dlsuEmail, password).
+Child Class (LasallianStudent): Inherits from DLSUUser but asks for student-specific registration data, like their DLSU college (e.g., CCS, COB, CLA) and year level.
+Child Class (OrgOfficer): Inherits from DLSUUser but requires org-specific data, like which student organization they represent (e.g., LSCS, animo.sys, Green Media Group) and their executive position.
+
 - Polymorphism: displayDashboard() for Applicant and Organization Officer
 - Abstraction: paymentMethod() for each organization's membership fee, implemented by Cash or DigitalBank
-- 
+  
 ### INITIAL CLASS IDEAS:
 - User (Abstract): Handles basic DLSU credentials, authentication, and core profile attributes.
 - Applicant: Tracks submitted applications and interview schedules
