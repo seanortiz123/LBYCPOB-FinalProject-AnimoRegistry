@@ -18,13 +18,14 @@ The students looking to join an organization can navigate through the website to
 ### CORE OOP CONCEPTS:
 - Encapsulation: <where/how>
 - Inheritance: <where/how>
-- Polymorphism: <where/how>
-- Abstraction: <where/how>
-
+- Polymorphism: displayDashboard() for Applicant and Organization Officer
+- Abstraction: paymentMethod() for each organization's membership fee, implemented by Cash or DigitalBank
+- 
 ### INITIAL CLASS IDEAS:
-- ClassName1: <responsibility>
-- ClassName2: <responsibility>
-- ClassName3: <responsibility>
+- User (Abstract): Handles basic DLSU credentials, authentication, and core profile attributes.
+- Applicant: Tracks submitted applications and interview schedules
+- Organization: Holds student group details, recruitment slots, and active applicants 	
+- ApplicationForm: Manages pending applications and interview answers			
 
 ### USER STORIES (Recommended):
 - As a <user type>, I want to <action> so that <goal>.
