@@ -9,7 +9,6 @@ Sean Matthew E. Ortiz - <GitHub username>
 PROBLEM STATEMENT & GOALS:
 There are currently no DLSU website that focuses on the recruitment process of organizations. This project aims to create a website that can help organizations recruit new members and students join organizations
 
-
 TARGET USER:
 - DLSU Students who wants to join an organization
 - DLSU Organizations who wants to recruit new members
