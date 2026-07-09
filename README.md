@@ -1,5 +1,4 @@
-## PROJECT TITLE:
-De La Salle University Organization Sign Up Webpage
+# De La Salle University Organization Sign Up Webpage
 
 ### TEAM MEMBERS:
 1. Johanna Rae C. Castor  - johannacastor
