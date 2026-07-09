@@ -31,7 +31,7 @@ The students looking to join an organization can navigate through the website to
 - As a <user type>, I want to <action> so that <goal>.
 - As a <user type>, I want to <action> so that <goal>.
 
-## CORE FEATURES (Recommended):
+### CORE FEATURES (Recommended):
 - Several webpages to navigate through each organization
 - DLSU organizations able to add their own page and manage applicants
 - Students able to join organization from the page of the organization
