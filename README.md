@@ -1,4 +1,4 @@
-# De La Salle University Organization Sign Up Webpage
+# AnimoRegistry: A Centralized One-Stop Application for De La Salle University Students and Organization Recruitment Management
 
 ### TEAM MEMBERS:
 1. Johanna Rae C. Castor  - johannacastor
