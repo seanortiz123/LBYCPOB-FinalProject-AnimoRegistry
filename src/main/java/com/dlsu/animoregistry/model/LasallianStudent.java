@@ -7,6 +7,16 @@ public class LasallianStudent extends DLSUUser {
     private String college;
     private String yearLevel;
 
+    protected LasallianStudent() {
+        super();
+    }
+
+    public LasallianStudent(String idNumber, String name, String dlsuEmail, String password,
+                            String college, String yearLevel) {
+        super(idNumber, name, dlsuEmail, password);
+        this.college = college;
+        this.yearLevel = yearLevel;
+    }
 
     @Override
     public String displayDashboard() {
