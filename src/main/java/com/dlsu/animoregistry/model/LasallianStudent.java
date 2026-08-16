@@ -18,6 +18,14 @@ public class LasallianStudent extends DLSUUser {
         this.yearLevel = yearLevel;
     }
 
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
     @Override
     public String displayDashboard() {
         return String.format("Applicant Dashboard - %s (%s, %s)", getName(), college, yearLevel);
