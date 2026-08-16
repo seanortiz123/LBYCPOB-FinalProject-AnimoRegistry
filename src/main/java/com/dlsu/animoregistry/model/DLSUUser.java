@@ -12,4 +12,31 @@ public abstract class DLSUUser {
 
     @JsonIgnore
     private String password;
+
+    protected DLSUUser() {
+        }
+
+    public void setIdNumber(String idNumber) {
+        if (idNumber == null || !idNumber.matches("\\d{8}")) {
+            throw new IllegalArgumentException(
+                    "Invalid DLSU ID Number. It must be exactly 8 digits (ex., 12501234).");
+        }
+        this.idNumber = idNumber;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setDlsuEmail(String dlsuEmail) {
+        if (dlsuEmail == null || !dlsuEmail.trim().toLowerCase().endsWith("@dlsu.edu.ph")) {
+            throw new IllegalArgumentException(
+                    "Invalid email. Only @dlsu.edu.ph addresses may register.");
+        }
+        this.dlsuEmail = dlsuEmail.trim().toLowerCase();
+    }
+
+    public String getDlsuEmail() {
+        return dlsuEmail;
+    }
 }
