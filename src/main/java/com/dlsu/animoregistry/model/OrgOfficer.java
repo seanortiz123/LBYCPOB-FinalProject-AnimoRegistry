@@ -39,4 +39,17 @@ public class OrgOfficer extends DLSUUser {
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
+
+    @Override
+    public String displayDashboard() {
+        String orgName = organization != null ? organization.getName() : "(no organization assigned)";
+        int pendingCount = organization != null
+                ? (int) organization.getApplications().stream()
+                        .filter(a -> a.getStatus() == ApplicationStatus.PENDING)
+                        .count()
+                : 0;
+        return String.format(
+                "Officer Dashboard - %s, %s of %s | %d applications awaiting review",
+                getName(), position, orgName, pendingCount);
+    }
 }
