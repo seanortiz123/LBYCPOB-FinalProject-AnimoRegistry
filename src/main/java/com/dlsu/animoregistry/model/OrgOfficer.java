@@ -12,5 +12,15 @@ public class OrgOfficer extends DLSUUser {
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
-    
+
+    protected OrgOfficer() {
+        super();
+    }
+
+    public OrgOfficer(String idNumber, String name, String dlsuEmail, String password,
+                      Organization organization, String position) {
+        super(idNumber, name, dlsuEmail, password);
+        this.organization = organization;
+        this.position = position;
+    }
 }
