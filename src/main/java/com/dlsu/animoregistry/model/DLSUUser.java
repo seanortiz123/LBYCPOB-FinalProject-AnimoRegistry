@@ -1,5 +1,15 @@
 package com.dlsu.animoregistry.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DLSUUser {
 
     @Id
@@ -40,25 +50,10 @@ public abstract class DLSUUser {
         return dlsuEmail;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name cannot be blank.");
-        }
+    protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
+        setIdNumber(idNumber);
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        if (password == null || password.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters.");
-        }
+        setDlsuEmail(dlsuEmail);
         this.password = password;
     }
 
