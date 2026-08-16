@@ -10,10 +10,42 @@ public class Organization {
     private String logoUrl;
     private String socialMediaHandle;
 
+    private boolean registrationOpen = true;
+    private int membershipCap;
+    private int currentMemberCount = 0;
+
+    private double membershipFeeAmount;
+
     public Organization(String name, String category, String description) {
         this.name = name;
         this.category = category;
         this.description = description;
+        this.membershipCap = membershipCap;
+        this.membershipFeeAmount = membershipFeeAmount;
+    }
+
+    // ---- Registration status control (Executive Board Member user story) ----
+    public void closeRegistration() {
+        this.registrationOpen = false;
+    }
+
+    public void openRegistration() {
+        this.registrationOpen = true;
+    }
+
+    // ---- Membership slot logic (Org Officer user story) ----
+    public boolean hasAvailableSlot() {
+        return currentMemberCount < membershipCap;
+    }
+
+    public void incrementMemberCount() {
+        if (!hasAvailableSlot()) {
+            throw new IllegalStateException("Membership cap already reached for " + name + ".");
+        }
+        this.currentMemberCount++;
+        if (!hasAvailableSlot()) {
+            this.registrationOpen = false;
+        }
     }
 
     // ---- Getters / Setters (Central Committee Member profile-editing user story) ----
@@ -59,5 +91,33 @@ public class Organization {
 
     public void setSocialMediaHandle(String socialMediaHandle) {
         this.socialMediaHandle = socialMediaHandle;
+    }
+
+    public boolean isRegistrationOpen() {
+        return registrationOpen;
+    }
+
+    public int getMembershipCap() {
+        return membershipCap;
+    }
+
+    public void setMembershipCap(int membershipCap) {
+        if (membershipCap < currentMemberCount) {
+            throw new IllegalArgumentException(
+                    "Membership cap cannot be lower than the current member count (" + currentMemberCount + ").");
+        }
+        this.membershipCap = membershipCap;
+    }
+
+    public int getCurrentMemberCount() {
+        return currentMemberCount;
+    }
+
+    public double getMembershipFeeAmount() {
+        return membershipFeeAmount;
+    }
+
+    public void setMembershipFeeAmount(double membershipFeeAmount) {
+        this.membershipFeeAmount = membershipFeeAmount;
     }
 }
