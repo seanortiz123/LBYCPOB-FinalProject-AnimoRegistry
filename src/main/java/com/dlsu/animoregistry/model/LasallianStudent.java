@@ -49,6 +49,14 @@ public class LasallianStudent extends DLSUUser {
 
     @Override
     public String displayDashboard() {
-        return String.format("Applicant Dashboard - %s (%s, %s)", getName(), college, yearLevel);
+        long pending = applications.stream()
+                .filter(a -> a.getStatus() == ApplicationStatus.PENDING)
+                .count();
+        long accepted = applications.stream()
+                .filter(a -> a.getStatus() == ApplicationStatus.ACCEPTED)
+                .count();
+        return String.format(
+                "Applicant Dashboard - %s (%s, %s) | Applications: %d total, %d pending, %d accepted",
+                getName(), college, yearLevel, applications.size(), pending, accepted);
     }
 }
