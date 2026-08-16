@@ -87,4 +87,6 @@ public abstract class DLSUUser {
     public Long getId() {
         return id;
     }
+
+    public abstract String displayDashboard();
 }
