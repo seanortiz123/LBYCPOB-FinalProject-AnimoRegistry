@@ -8,4 +8,9 @@ import jakarta.persistence.ManyToOne;
 public class OrgOfficer extends DLSUUser {
 
     private String position;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
+    
 }
