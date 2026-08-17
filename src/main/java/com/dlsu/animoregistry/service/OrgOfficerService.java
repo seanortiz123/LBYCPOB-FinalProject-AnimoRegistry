@@ -15,4 +15,14 @@ public class OrgOfficerService {
         this.officerRepository = officerRepository;
         this.organizationRepository = organizationRepository;
     }
+
+    public OrgOfficer register(Long organizationId, OrgOfficer officer) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Organization not found with id: " + organizationId));
+        officerRepository.findByDlsuEmail(officer.getDlsuEmail()).ifPresent(existing -> {
+            throw new IllegalArgumentException("An account with this DLSU email already exists.");
+        });
+        officer.setOrganization(organization);
+        return officerRepository.save(officer);
+    }
 }
