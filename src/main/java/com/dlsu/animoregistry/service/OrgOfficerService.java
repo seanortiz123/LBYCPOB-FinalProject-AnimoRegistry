@@ -1,6 +1,8 @@
 package com.dlsu.animoregistry.service;
 
 import com.dlsu.animoregistry.model.OrgOfficer;
+import com.dlsu.animoregistry.model.Organization;
+import com.dlsu.animoregistry.exception.ResourceNotFoundException;
 import com.dlsu.animoregistry.repository.OrgOfficerRepository;
 import com.dlsu.animoregistry.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
@@ -36,4 +38,16 @@ public class OrgOfficerService {
                 .orElseThrow(() -> new ResourceNotFoundException("Officer not found with id: " + id));
     }
 
+    public String getDashboard(Long id) {
+        return getById(id).displayDashboard();
+    }
+
+    public OrgOfficer login(String dlsuEmail, String password) {
+        OrgOfficer officer = officerRepository.findByDlsuEmail(dlsuEmail)
+                .orElseThrow(() -> new IllegalArgumentException("No account found for that email."));
+        if (!officer.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Incorrect password.");
+        }
+        return officer;
+    }
 }
