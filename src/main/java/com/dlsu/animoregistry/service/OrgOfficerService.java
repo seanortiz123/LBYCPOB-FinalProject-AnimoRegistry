@@ -5,6 +5,8 @@ import com.dlsu.animoregistry.repository.OrgOfficerRepository;
 import com.dlsu.animoregistry.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrgOfficerService {
 
@@ -25,4 +27,13 @@ public class OrgOfficerService {
         officer.setOrganization(organization);
         return officerRepository.save(officer);
     }
+    public List<OrgOfficer> getAll() {
+        return officerRepository.findAll();
+    }
+
+    public OrgOfficer getById(Long id) {
+        return officerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Officer not found with id: " + id));
+    }
+
 }
