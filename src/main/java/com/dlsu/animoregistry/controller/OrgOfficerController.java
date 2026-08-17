@@ -27,4 +27,14 @@ public class OrgOfficerController {
     public List<OrgOfficer> getAll() {
         return officerService.getAll();
     }
+
+    @GetMapping("/{id}")
+    public OrgOfficer getById(@PathVariable Long id) {
+        return officerService.getById(id);
+    }
+
+    @GetMapping("/{id}/dashboard")
+    public String getDashboard(@PathVariable Long id) {
+        return officerService.getDashboard(id);
+    }
 }
