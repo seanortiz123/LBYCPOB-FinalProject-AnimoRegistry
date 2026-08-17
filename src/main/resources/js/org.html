@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnimoRegistry — Find your DLSU org</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<header class="hero">
+    <div class="wrap">
+        <span class="eyebrow">DLSU recruitment, one stop</span>
+        <h1>Find the org that's<br />actually your tambayan.</h1>
+        <p class="lede">
+            Browse every DLSU organization running recruitment right now, see how many slots are
+            left, and apply straight from your dashboard — no more separate Google Forms per org.
+        </p>
+        <div class="hero-stats" id="hero-stats"></div>
+    </div>
+</header>
+
+<main class="page-body">
+    <div class="wrap">
+        <div class="filter-row">
+            <button class="chip active" data-category="">All</button>
+            <div id="category-chips" style="display:contents"></div>
+            <input class="input search-input" style="max-width:240px" id="search-input" placeholder="Search organizations…" />
+        </div>
+
+        <div id="org-grid" class="booth-grid"></div>
+        <div id="loading" class="loading-state">Loading organizations…</div>
+        <div id="empty" class="empty-state" style="display:none">
+            <span class="eyebrow">No matches</span>
+            <p>No organizations match that search or filter. Try clearing it.</p>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/org.js"></script>
+</body>
+</html>
