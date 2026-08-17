@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer panel — AnimoRegistry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<main class="page-body">
+    <div class="wrap" style="padding-top:36px">
+        <span class="eyebrow" id="officer-role-label">Officer panel</span>
+        <h1 id="org-name" style="font-size:30px;margin-top:6px">Loading…</h1>
+
+        <div class="two-col" style="margin-top:24px;align-items:start">
+            <div>
+                <div class="tabs" id="status-tabs">
+                    <button class="active" data-status="">All</button>
+                    <button data-status="PENDING">Pending</button>
+                    <button data-status="INTERVIEW_SCHEDULED">Interview</button>
+                    <button data-status="ACCEPTED">Accepted</button>
+                    <button data-status="REJECTED">Rejected</button>
+                </div>
+                <div id="applicants-list"></div>
+                <div class="loading-state" id="loading">Loading applicants…</div>
+                <div class="empty-state" id="empty" style="display:none">
+                    <span class="eyebrow">No applicants</span>
+                    <p>No applications match this filter yet.</p>
+                </div>
+            </div>
+
+            <div id="side-panel"></div>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script>
+</script>
+</body>
+</html>
