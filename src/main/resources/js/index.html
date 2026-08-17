@@ -43,6 +43,8 @@
 <script src="js/api.js"></script>
 <script>
     let allOrgs = [];
+    let activeCategory = "";
+    let searchTerm = "";
 
     function boothCard(org) {
         const isOpen = org.registrationOpen;
@@ -71,7 +73,32 @@
 
     function render() {
         const grid = document.getElementById("org-grid");
-        grid.innerHTML = allOrgs.map(boothCard).join("");
+        const empty = document.getElementById("empty");
+
+        let filtered = allOrgs;
+        if (activeCategory) filtered = filtered.filter(o => o.category === activeCategory);
+        if (searchTerm) {
+            const t = searchTerm.toLowerCase();
+            filtered = filtered.filter(o => o.name.toLowerCase().includes(t) || (o.description || "").toLowerCase().includes(t));
+        }
+
+        grid.innerHTML = filtered.map(boothCard).join("");
+        empty.style.display = filtered.length === 0 ? "block" : "none";
+    }
+
+    function renderCategoryChips() {
+        const categories = [...new Set(allOrgs.map(o => o.category).filter(Boolean))];
+        const mount = document.getElementById("category-chips");
+        mount.innerHTML = categories.map(c => `<button class="chip" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join("");
+
+        document.querySelectorAll(".chip").forEach(chip => {
+            chip.addEventListener("click", () => {
+                document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+                chip.classList.add("active");
+                activeCategory = chip.dataset.category || "";
+                render();
+            });
+        });
     }
 
     function renderStats() {
@@ -90,10 +117,16 @@
             allOrgs = await api.get("/organizations");
             document.getElementById("loading").style.display = "none";
             renderStats();
+            renderCategoryChips();
             render();
         } catch (err) {
             document.getElementById("loading").textContent = "Couldn't load organizations. Is the server running?";
         }
+
+        document.getElementById("search-input").addEventListener("input", (e) => {
+            searchTerm = e.target.value;
+            render();
+        });
     }
 
     init();
