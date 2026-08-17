@@ -1,7 +1,23 @@
 package com.dlsu.animoregistry.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Organization {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;              // e.g. "LSCS", "animo.sys", "Green Media Group"
@@ -16,12 +32,24 @@ public class Organization {
 
     private double membershipFeeAmount;
 
-    public Organization(String name, String category, String description) {
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ApplicationForm> applications = new ArrayList<>();
+
+    protected Organization() {
+    }
+
+    public Organization(String name, String category, String description, int membershipCap,
+                        double membershipFeeAmount, PaymentType paymentType) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.membershipCap = membershipCap;
         this.membershipFeeAmount = membershipFeeAmount;
+        this.paymentType = paymentType;
     }
 
     // ---- Registration status control (Executive Board Member user story) ----
@@ -46,6 +74,12 @@ public class Organization {
         if (!hasAvailableSlot()) {
             this.registrationOpen = false;
         }
+    }
+
+    // ---- Payment (Abstraction in action) ----
+    public String collectMembershipFee(String payerName) {
+        PaymentMethod method = PaymentMethodFactory.from(this.paymentType);
+        return method.processPayment(this.membershipFeeAmount, payerName);
     }
 
     // ---- Getters / Setters (Central Committee Member profile-editing user story) ----
@@ -119,5 +153,17 @@ public class Organization {
 
     public void setMembershipFeeAmount(double membershipFeeAmount) {
         this.membershipFeeAmount = membershipFeeAmount;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public List<ApplicationForm> getApplications() {
+        return applications;
     }
 }
