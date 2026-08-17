@@ -12,4 +12,14 @@ public class StudentService {
     public StudentService(LasallianStudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+
+    public LasallianStudent register(LasallianStudent student) {
+        studentRepository.findByDlsuEmail(student.getDlsuEmail()).ifPresent(existing -> {
+            throw new IllegalArgumentException("An account with this DLSU email already exists.");
+        });
+        studentRepository.findByIdNumber(student.getIdNumber()).ifPresent(existing -> {
+            throw new IllegalArgumentException("An account with this ID number already exists.");
+        });
+        return studentRepository.save(student);
+    }
 }
