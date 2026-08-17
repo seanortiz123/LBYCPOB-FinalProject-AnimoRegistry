@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer panel — AnimoRegistry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<main class="page-body">
+    <div class="wrap" style="padding-top:36px">
+        <span class="eyebrow" id="officer-role-label">Officer panel</span>
+        <h1 id="org-name" style="font-size:30px;margin-top:6px">Loading…</h1>
+
+        <div class="two-col" style="margin-top:24px;align-items:start">
+            <div>
+                <div class="tabs" id="status-tabs">
+                    <button class="active" data-status="">All</button>
+                    <button data-status="PENDING">Pending</button>
+                    <button data-status="INTERVIEW_SCHEDULED">Interview</button>
+                    <button data-status="ACCEPTED">Accepted</button>
+                    <button data-status="REJECTED">Rejected</button>
+                </div>
+                <div id="applicants-list"></div>
+                <div class="loading-state" id="loading">Loading applicants…</div>
+                <div class="empty-state" id="empty" style="display:none">
+                    <span class="eyebrow">No applicants</span>
+                    <p>No applications match this filter yet.</p>
+                </div>
+            </div>
+
+            <div id="side-panel"></div>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script>
+    let org, allApps, activeStatus = "";
+    let officerId;
+
+    function fmtMoney(n) { return `₱${Number(n).toFixed(0)}`; }
+
+    function renderSidePanel() {
+        const pct = org.membershipCap > 0 ? Math.min(100, Math.round((org.currentMemberCount / org.membershipCap) * 100)) : 0;
+        document.getElementById("side-panel").innerHTML = `
+        <div class="panel">
+          <div class="panel-title">Booth stats</div>
+          <div class="stat-grid">
+            <div class="stat"><div class="num">${org.currentMemberCount}/${org.membershipCap}</div><div class="label">Members</div></div>
+            <div class="stat"><div class="num">${fmtMoney(org.membershipFeeAmount)}</div><div class="label">Fee</div></div>
+          </div>
+          <div class="meter-block" style="margin-top:10px"><div class="meter"><div class="meter-fill" style="width:${pct}%"></div></div></div>
+          <div class="divider"></div>
+          <div class="switch-row">
+            <div><div style="font-size:14px">Recruitment open</div><div class="hint">Students can only apply while this is on.</div></div>
+            <div class="switch ${org.registrationOpen ? "on" : ""}" id="reg-switch"></div>
+          </div>
+          <div class="divider"></div>
+          <div class="field"><label for="cap-input">Membership cap</label><input class="input" type="number" id="cap-input" value="${org.membershipCap}" min="${org.currentMemberCount}" /></div>
+          <button class="btn btn-sm" id="save-cap">Save cap</button>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Edit booth profile</div>
+          <div class="form-error" id="profile-error"></div>
+          <div class="field"><label for="p-category">Category</label><input class="input" id="p-category" value="${escapeHtml(org.category || "")}" /></div>
+          <div class="field"><label for="p-description">Description</label><textarea class="textarea" id="p-description">${escapeHtml(org.description || "")}</textarea></div>
+          <div class="field"><label for="p-social">Social media handle</label><input class="input" id="p-social" value="${escapeHtml(org.socialMediaHandle || "")}" placeholder="@your.org" /></div>
+          <div class="field"><label for="p-logo">Logo URL</label><input class="input" id="p-logo" value="${escapeHtml(org.logoUrl || "")}" placeholder="https://…" /></div>
+          <button class="btn btn-primary btn-block" id="save-profile">Save profile</button>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Collect membership fee</div>
+          <p class="hint" style="margin-bottom:10px">Records a ${org.paymentType === "DIGITAL_BANK" ? "digital bank" : "cash"} payment and returns a receipt.</p>
+          <div class="field"><label for="payer-name">Payer name</label><input class="input" id="payer-name" placeholder="Full name" /></div>
+          <button class="btn btn-gold btn-block" id="collect-fee">Collect ${fmtMoney(org.membershipFeeAmount)}</button>
+          <div class="form-success" id="fee-receipt" style="margin-top:12px"></div>
+        </div>
+      `;
+
+        document.getElementById("reg-switch").addEventListener("click", async (e) => {
+            try { org = await api.patch(`/organizations/${org.id}/registration-status`, { open: !org.registrationOpen }); renderSidePanel(); } catch (err) { alert(err.message); }
+        });
+        document.getElementById("save-cap").addEventListener("click", async () => {
+            try { org = await api.patch(`/organizations/${org.id}/membership-cap`, { membershipCap: Number(document.getElementById("cap-input").value) }); renderSidePanel(); } catch (err) { alert(err.message); }
+        });
+        document.getElementById("save-profile").addEventListener("click", async () => {
+            const errorEl = document.getElementById("profile-error"); hideError(errorEl);
+            try {
+                org = await api.put(`/organizations/${org.id}/profile`, {
+                    category: document.getElementById("p-category").value,
+                    description: document.getElementById("p-description").value,
+                    socialMediaHandle: document.getElementById("p-social").value,
+                    logoUrl: document.getElementById("p-logo").value,
+                });
+                renderSidePanel();
+            } catch (err) { showError(errorEl, err.message); }
+        });
+        document.getElementById("collect-fee").addEventListener("click", async () => {
+            const payerName = document.getElementById("payer-name").value.trim();
+            if (!payerName) { alert("Enter a payer name first."); return; }
+            try {
+                const res = await api.post(`/organizations/${org.id}/collect-fee`, { payerName });
+                const receiptEl = document.getElementById("fee-receipt"); receiptEl.textContent = res.receipt; receiptEl.classList.add("show");
+            } catch (err) { alert(err.message); }
+        });
+    }
+
+    function renderApplicants() {
+        const list = document.getElementById("applicants-list"), empty = document.getElementById("empty");
+        const filtered = activeStatus ? allApps.filter(a => a.status === activeStatus) : allApps;
+        empty.style.display = filtered.length === 0 ? "block" : "none";
+        list.innerHTML = filtered.sort((a, b) => new Date(b.dateApplied) - new Date(a.dateApplied)).map(a => `
+        <div class="app-row" data-app-id="${a.id}">
+          <div class="app-row-top">
+            <div><div class="name">${escapeHtml(a.applicant.name)}</div><div class="sub">${escapeHtml(a.applicant.idNumber)} · ${escapeHtml(a.applicant.college)}, ${escapeHtml(a.applicant.yearLevel)} · Applied ${formatDate(a.dateApplied)}</div></div>
+            <span class="badge ${a.status}">${statusLabel(a.status)}</span>
+          </div>
+          ${a.answers ? `<div class="answers">${escapeHtml(a.answers)}</div>` : ""}
+          ${a.interviewSchedule ? `<div class="sub" style="margin-top:8px">Interview: ${formatDate(a.interviewSchedule)}</div>` : ""}
+          <div class="actions">
+            <input type="datetime-local" class="input" style="width:auto;padding:7px 10px;font-size:13px" id="interview-${a.id}" />
+            <button class="btn btn-sm" data-action="interview" data-id="${a.id}">Schedule interview</button>
+            <button class="btn btn-sm btn-primary" data-action="accept" data-id="${a.id}" ${a.status === "ACCEPTED" ? "disabled" : ""}>Accept</button>
+            <button class="btn btn-sm btn-danger" data-action="reject" data-id="${a.id}" ${a.status === "REJECTED" ? "disabled" : ""}>Reject</button>
+          </div>
+        </div>
+      `).join("");
+        list.querySelectorAll("button[data-action]").forEach(btn => btn.addEventListener("click", () => handleAction(btn.dataset.action, Number(btn.dataset.id))));
+    }
+
+    async function handleAction(action, appId) {
+        try {
+            if (action === "accept") await api.patch(`/applications/${appId}/status`, { status: "ACCEPTED" });
+            else if (action === "reject") await api.patch(`/applications/${appId}/status`, { status: "REJECTED" });
+            else if (action === "interview") {
+                const input = document.getElementById(`interview-${appId}`);
+                if (!input.value) { alert("Pick a date and time first."); return; }
+                await api.patch(`/applications/${appId}/interview`, { interviewSchedule: input.value });
+            }
+            await refreshApplicants(); org = await api.get(`/organizations/${org.id}`); renderSidePanel();
+        } catch (err) { alert(err.message); }
+    }
+
+    async function refreshApplicants() { allApps = await api.get(`/applications/organization/${org.id}`); renderApplicants(); }
+
+    async function init() {
+        renderNav("officer"); const s = requireRole("officer"); if (!s) return; officerId = s.id;
+        try {
+            const officer = await api.get(`/officers/${officerId}`);
+            document.getElementById("officer-role-label").textContent = `${officer.position} · Officer panel`;
+            org = await api.get(`/organizations/${officer.organization.id}`);
+        } catch (err) { document.getElementById("loading").textContent = "Couldn't load officer panel details."; return; }
+
+        document.getElementById("org-name").textContent = org.name; renderSidePanel();
+        try { await refreshApplicants(); } catch (err) { document.getElementById("loading").textContent = "Couldn't load applicants."; return; }
+        document.getElementById("loading").style.display = "none";
+
+        document.querySelectorAll("#status-tabs button").forEach(tab => {
+            tab.addEventListener("click", () => {
+                document.querySelectorAll("#status-tabs button").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active"); activeStatus = tab.dataset.status; renderApplicants();
+            });
+        });
+    }
+
+    init();
+</script>
+</body>
+</html>
