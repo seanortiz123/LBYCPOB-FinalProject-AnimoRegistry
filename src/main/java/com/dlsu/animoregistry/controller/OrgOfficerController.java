@@ -1,5 +1,6 @@
 package com.dlsu.animoregistry.controller;
 
+import com.dlsu.animoregistry.dto.LoginRequest;
 import com.dlsu.animoregistry.model.OrgOfficer;
 import com.dlsu.animoregistry.service.OrgOfficerService;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,10 @@ public class OrgOfficerController {
     @GetMapping("/{id}/dashboard")
     public String getDashboard(@PathVariable Long id) {
         return officerService.getDashboard(id);
+    }
+
+    @PostMapping("/login")
+    public OrgOfficer login(@RequestBody LoginRequest request) {
+        return officerService.login(request.getDlsuEmail(), request.getPassword());
     }
 }
