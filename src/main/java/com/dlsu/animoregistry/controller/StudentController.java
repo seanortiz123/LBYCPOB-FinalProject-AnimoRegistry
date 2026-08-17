@@ -2,7 +2,6 @@ package com.dlsu.animoregistry.controller;
 
 import com.dlsu.animoregistry.model.LasallianStudent;
 import com.dlsu.animoregistry.service.StudentService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class StudentController {
     }
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
     public LasallianStudent register(@RequestBody LasallianStudent student) {
         return studentService.register(student);
     }
@@ -26,5 +25,15 @@ public class StudentController {
     @GetMapping
     public List<LasallianStudent> getAll() {
         return studentService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public LasallianStudent getById(@PathVariable Long id) {
+        return studentService.getById(id);
+    }
+
+    @GetMapping("/{id}/dashboard")
+    public String getDashboard(@PathVariable Long id) {
+        return studentService.getDashboard(id);
     }
 }
