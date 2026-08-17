@@ -1,8 +1,11 @@
 package com.dlsu.animoregistry.service;
 
+import com.dlsu.animoregistry.exception.ResourceNotFoundException;
 import com.dlsu.animoregistry.model.LasallianStudent;
 import com.dlsu.animoregistry.repository.LasallianStudentRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -21,5 +24,14 @@ public class StudentService {
             throw new IllegalArgumentException("An account with this ID number already exists.");
         });
         return studentRepository.save(student);
+    }
+
+    public List<LasallianStudent> getAll() {
+        return studentRepository.findAll();
+    }
+
+    public LasallianStudent getById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 }
