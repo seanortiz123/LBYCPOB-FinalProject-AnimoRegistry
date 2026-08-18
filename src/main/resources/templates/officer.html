@@ -55,6 +55,64 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ============ SIDE PANEL ============ -->
+            <div>
+
+                <div class="panel">
+                    <p class="panel-title">Booth stats</p>
+                    <div class="stat-grid" style="margin-bottom:16px">
+                        <div class="stat"><div class="num" th:text="${org.currentMemberCount} + '/' + ${org.membershipCap}">0/0</div><div class="label">Members</div></div>
+                        <div class="stat"><div class="num" th:text="'₱' + ${#numbers.formatDecimal(org.membershipFeeAmount, 1, 0)}">₱0</div><div class="label">Fee</div></div>
+                    </div>
+                    <div class="meter" style="margin-bottom:16px"><div class="meter-fill" th:style="'width:' + ${org.membershipCap > 0 ? (org.currentMemberCount * 100 / org.membershipCap) : 0} + '%'"></div></div>
+
+                    <div class="divider"></div>
+
+                    <form th:action="@{/officer/registration-status}" method="post" class="switch-row">
+                        <div>
+                            <div>Recruitment open</div>
+                            <div class="hint">Students can only apply while this is on.</div>
+                        </div>
+                        <input type="hidden" name="open" th:value="${!org.registrationOpen}" />
+                        <button type="submit" class="switch" th:classappend="${org.registrationOpen} ? 'on' : ''" style="border:1px solid var(--line);padding:0">
+                            <span class="knob"></span>
+                        </button>
+                    </form>
+
+                    <div class="divider"></div>
+
+                    <form th:action="@{/officer/membership-cap}" method="post">
+                        <div class="field">
+                            <label>Membership cap</label>
+                            <input class="input" type="number" name="membershipCap" th:value="${org.membershipCap}" th:min="${org.currentMemberCount}" />
+                        </div>
+                        <button type="submit" class="btn btn-sm">Save cap</button>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <p class="panel-title">Edit booth profile</p>
+                    <form th:action="@{/officer/profile}" method="post">
+                        <div class="field"><label>Category</label><input class="input" name="category" th:value="${org.category}" required /></div>
+                        <div class="field"><label>Description</label><textarea class="textarea" name="description" rows="3" required th:text="${org.description}"></textarea></div>
+                        <div class="field"><label>Social media handle</label><input class="input" name="socialMediaHandle" th:value="${org.socialMediaHandle}" /></div>
+                        <div class="field"><label>Logo URL</label><input class="input" name="logoUrl" th:value="${org.logoUrl}" /></div>
+                        <button type="submit" class="btn btn-primary btn-block">Save profile</button>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <p class="panel-title">Collect membership fee</p>
+                    <p class="hint" style="margin-bottom:14px"
+                       th:text="'Records a ' + (${org.paymentType.name() == 'DIGITAL_BANK'} ? 'digital bank' : 'cash') + ' payment and returns a receipt.'">Records a payment.</p>
+                    <form th:action="@{/officer/collect-fee}" method="post">
+                        <div class="field"><label>Payer name</label><input class="input" name="payerName" required /></div>
+                        <button type="submit" class="btn btn-gold btn-block" th:text="'Collect ₱' + ${#numbers.formatDecimal(org.membershipFeeAmount, 1, 0)}">Collect</button>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 </main>
