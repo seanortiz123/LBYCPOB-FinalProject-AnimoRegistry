@@ -44,3 +44,50 @@
                 <label for="password">Password (min. 8 characters)</label>
                 <input class="input" type="password" id="password" minlength="8" required />
             </div>
+            <div id="student-fields">
+                <div class="field-row">
+                    <div class="field">
+                        <label for="college">College</label>
+                        <select class="select" id="college">
+                            <option>CLA</option>
+                            <option>COS</option>
+                            <option>GCOE</option>
+                            <option>RVR-COB</option>
+                            <option>SOE</option>
+                            <option>BAGCED</option>
+                            <option>CCS</option>
+                            <option>SHS</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="yearLevel">Year level</label>
+                        <select class="select" id="yearLevel">
+                            <option>1st Year</option>
+                            <option>2nd Year</option>
+                            <option>3rd Year</option>
+                            <option>4th Year</option>
+                            <option>5th Year and above</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="officer-fields" style="display:none">
+                <div class="field">
+                    <label for="organization">Organization</label>
+                    <select class="select" id="organization"></select>
+                </div>
+                <div class="field">
+                    <label for="position">Position</label>
+                    <input class="input" id="position" placeholder="Junior Finance Officer" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        </form>
+    </div>
+
+    <p class="muted" style="text-align:center;margin-top:18px;font-size:13.5px">
+        Already registered? <a href="login.html" style="color:var(--gold)">Log in</a>
+    </p>
+</main>
