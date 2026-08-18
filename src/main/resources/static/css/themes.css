@@ -132,3 +132,101 @@ h1, h2, h3, h4 {
 
 .nav-links a:hover, .nav-links button:hover { color: var(--text); background: var(--surface-2); }
 .nav-links a.active { color: var(--text); background: var(--surface-2); }
+
+/* ---------- buttons ---------- */
+
+.btn {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.15s, border-color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover { transform: translateY(-1px); border-color: var(--emerald); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: #06140d;
+}
+.btn-primary:hover { background: var(--emerald-bright); border-color: var(--emerald-bright); }
+
+.btn-gold {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #26200a;
+}
+.btn-gold:hover { filter: brightness(1.08); }
+
+.btn-danger {
+    background: transparent;
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.btn-danger:hover { background: rgba(226, 102, 90, 0.12); }
+
+.btn-block { width: 100%; justify-content: center; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* ---------- hero ---------- */
+
+.hero {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto auto;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(20, 168, 102, 0.25), transparent 65%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.04;
+    max-width: 700px;
+}
+
+.hero p.lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 14px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.hero-stat .num {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    color: var(--gold);
+}
+.hero-stat .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+}
