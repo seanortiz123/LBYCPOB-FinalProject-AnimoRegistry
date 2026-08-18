@@ -13,3 +13,35 @@
         <button type="button" id="role-student" class="active" onclick="setRole('student')">Student</button>
         <button type="button" id="role-officer" onclick="setRole('officer')">Org officer</button>
     </div>
+    <div class="panel">
+        <div class="form-error show" th:if="${loginError}" th:text="${loginError}"></div>
+        <div class="form-success show" th:if="${registerSuccess}" th:text="${registerSuccess}"></div>
+
+        <form th:action="@{/login}" method="post">
+            <input type="hidden" name="role" id="role-input" value="student" />
+            <div class="field">
+                <label for="email">DLSU email</label>
+                <input class="input" type="email" id="email" name="dlsuEmail" placeholder="juan_delacruz@dlsu.edu.ph" required />
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input class="input" type="password" id="password" name="password" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+    </div>
+
+    <p class="muted" style="text-align:center;margin-top:18px;font-size:13.5px">
+        No account yet? <a th:href="@{/register}" style="color:var(--gold)">Register here</a>
+    </p>
+</main>
+
+<script>
+    function setRole(role) {
+        document.getElementById('role-input').value = role;
+        document.getElementById('role-student').classList.toggle('active', role === 'student');
+        document.getElementById('role-officer').classList.toggle('active', role === 'officer');
+    }
+</script>
+</body>
+</html>
