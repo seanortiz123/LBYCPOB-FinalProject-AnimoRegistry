@@ -16,3 +16,29 @@
         <span class="eyebrow">Applicant dashboard</span>
         <h1 id="page-title" style="font-size:30px;margin-top:6px">My applications</h1>
         <div class="stat-grid" id="stat-grid" style="margin:22px 0 30px"></div>
+        <div id="apps-list"></div>
+        <div class="loading-state" id="loading">Loading your applications…</div>
+        <div class="empty-state" id="empty" style="display:none">
+            <span class="eyebrow">Nothing here yet</span>
+            <p>You haven't applied to any organizations. <a href="index.html" style="color:var(--gold)">Browse orgs →</a></p>
+        </div>
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script>
+    async function init() {
+        renderNav("dashboard");
+        const s = requireRole("student");
+        if (!s) return;
+
+        document.getElementById("page-title").textContent = `Welcome back, ${s.name.split(" ")[0]}`;
+
+        let apps;
+        try {
+            apps = await api.get(`/applications/student/${s.id}`);
+        } catch (err) {
+            document.getElementById("loading").textContent = "Couldn't load your applications.";
+            return;
+        }
+        document.getElementById("loading").style.display = "none";
