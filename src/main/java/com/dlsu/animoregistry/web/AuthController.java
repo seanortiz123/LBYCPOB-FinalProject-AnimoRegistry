@@ -28,4 +28,30 @@ public class AuthController {
         model.addAttribute("title", "Log in");
         return "login";
     }
+    @PostMapping("/login")
+    public String login(@RequestParam String role,
+                        @RequestParam String dlsuEmail,
+                        @RequestParam String password,
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes) {
+        try {
+            if ("officer".equals(role)) {
+                OrgOfficer officer = officerService.login(dlsuEmail, password);
+                session.setAttribute("role", "officer");
+                session.setAttribute("userId", officer.getId());
+                session.setAttribute("name", officer.getName());
+                session.setAttribute("organizationId", officer.getOrganization().getId());
+                return "redirect:/officer";
+            } else {
+                LasallianStudent student = studentService.login(dlsuEmail, password);
+                session.setAttribute("role", "student");
+                session.setAttribute("userId", student.getId());
+                session.setAttribute("name", student.getName());
+                return "redirect:/dashboard";
+            }
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("loginError", ex.getMessage());
+            return "redirect:/login";
+        }
+    }
 }
