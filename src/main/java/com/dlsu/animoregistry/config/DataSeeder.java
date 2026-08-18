@@ -47,5 +47,43 @@ public class DataSeeder implements CommandLineRunner {
 
         organizationRepository.save(lscs);
         organizationRepository.save(animoSys);
+
+        Organization gmg = new Organization(
+                "Green Media Group",
+                "Special Interest",
+                "DLSU's premier media and broadcasting organization.",
+                30,
+                100.0,
+                PaymentType.CASH
+        );
+        gmg.setSocialMediaHandle("@greenmediagroup");
+
+        organizationRepository.save(gmg);
+
+        LasallianStudent juan = new LasallianStudent(
+                "12345678", "Juan Dela Cruz", "juan_delacruz@dlsu.edu.ph", "password123",
+                "CCS", "1st Year"
+        );
+        LasallianStudent maria = new LasallianStudent(
+                "23456789", "Maria Santos", "maria_santos@dlsu.edu.ph", "password123",
+                "COB", "2nd Year"
+        );
+        studentRepository.save(juan);
+        studentRepository.save(maria);
+
+        OrgOfficer officer = new OrgOfficer(
+                "34567890", "Anna Reyes", "anna_reyes@dlsu.edu.ph", "password123",
+                lscs, "VP for Membership"
+        );
+        officerRepository.save(officer);
+
+        System.out.println("=======================================================");
+        System.out.println(" AnimoRegistry seeded with sample organizations, ");
+        System.out.println(" students, and an officer. Try:");
+        System.out.println("   GET  http://localhost:8080/api/organizations");
+        System.out.println("   GET  http://localhost:8080/api/students");
+        System.out.println("   GET  http://localhost:8080/api/officers/1/dashboard");
+        System.out.println("=======================================================");
+
     }
 }
