@@ -1,6 +1,8 @@
 package com.dlsu.animoregistry.config;
 
+import com.dlsu.animoregistry.model.LasallianStudent;
 import com.dlsu.animoregistry.model.Organization;
+import com.dlsu.animoregistry.model.OrgOfficer;
 import com.dlsu.animoregistry.model.PaymentType;
 import com.dlsu.animoregistry.repository.LasallianStudentRepository;
 import com.dlsu.animoregistry.repository.OrgOfficerRepository;
@@ -8,6 +10,11 @@ import com.dlsu.animoregistry.repository.OrganizationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Seeds the Supabase Postgres database with a few sample records on startup so
+ * the API has something to return right away. Purely for demo purposes -
+ * safe to delete once real data entry flows are wired up.
+ */
 @Configuration
 public class DataSeeder implements CommandLineRunner {
 
@@ -36,17 +43,14 @@ public class DataSeeder implements CommandLineRunner {
         lscs.setSocialMediaHandle("@dlsu.lscs");
 
         Organization animoSys = new Organization(
-                "ACCESS",
+                "animo.sys",
                 "Academic",
-                "DLSU's organization for Computer Engineering students, focused on dev culture and hackathons.",
+                "DLSU's organization for Software Technology students, focused on dev culture and hackathons.",
                 40,
                 200.0,
                 PaymentType.DIGITAL_BANK
         );
         animoSys.setSocialMediaHandle("@dlsu.animosys");
-
-        organizationRepository.save(lscs);
-        organizationRepository.save(animoSys);
 
         Organization gmg = new Organization(
                 "Green Media Group",
@@ -58,6 +62,8 @@ public class DataSeeder implements CommandLineRunner {
         );
         gmg.setSocialMediaHandle("@greenmediagroup");
 
+        organizationRepository.save(lscs);
+        organizationRepository.save(animoSys);
         organizationRepository.save(gmg);
 
         LasallianStudent juan = new LasallianStudent(
@@ -83,7 +89,8 @@ public class DataSeeder implements CommandLineRunner {
         System.out.println("   GET  http://localhost:8080/api/organizations");
         System.out.println("   GET  http://localhost:8080/api/students");
         System.out.println("   GET  http://localhost:8080/api/officers/1/dashboard");
+        System.out.println(" Database: Connected to Supabase PostgreSQL");
+        System.out.println(" Dashboard: https://supabase.com/dashboard");
         System.out.println("=======================================================");
-
     }
 }

@@ -16,15 +16,16 @@ public abstract class DLSUUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String idNumber;
+    private String name;
+    private String dlsuEmail;
+
     @JsonIgnore
     private String password;
 
     protected DLSUUser() {
+        // required by JPA
     }
-
-    private String idNumber;
-    private String name;
-    private String dlsuEmail;
 
     protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
         setIdNumber(idNumber);
@@ -33,6 +34,7 @@ public abstract class DLSUUser {
         this.password = password;
     }
 
+    // ---- Encapsulation: ID Number Verification ----
     public void setIdNumber(String idNumber) {
         if (idNumber == null || !idNumber.matches("\\d{8}")) {
             throw new IllegalArgumentException(
@@ -45,6 +47,7 @@ public abstract class DLSUUser {
         return idNumber;
     }
 
+    // ---- Encapsulation: DLSU Email Validation ----
     public void setDlsuEmail(String dlsuEmail) {
         if (dlsuEmail == null || !dlsuEmail.trim().toLowerCase().endsWith("@dlsu.edu.ph")) {
             throw new IllegalArgumentException(
@@ -83,5 +86,9 @@ public abstract class DLSUUser {
         return id;
     }
 
+    /**
+     * Polymorphism: each concrete subclass returns a dashboard summary
+     * relevant to its own role (Applicant vs Organization Officer).
+     */
     public abstract String displayDashboard();
 }
