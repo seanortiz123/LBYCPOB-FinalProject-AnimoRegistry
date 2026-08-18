@@ -80,6 +80,7 @@ function renderNav(activePage) {
         <a href="index.html" class="brand"><span class="dot"></span>AnimoRegistry</a>
         <div class="nav-links">
           <a href="index.html" class="${activePage === "home" ? "active" : ""}">Browse orgs</a>
+          <a href="about.html" class="${activePage === "about" ? "active" : ""}">About us</a>
           ${rightLinks}
         </div>
       </div>
