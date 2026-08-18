@@ -25,4 +25,18 @@ public class DashboardController {
         if (!"student".equals(session.getAttribute("role")) || studentId == null) {
             return "redirect:/login";
         }
+        List<ApplicationForm> apps = applicationService.getByStudent(studentId);
+        apps.sort(Comparator.comparing(ApplicationForm::getDateApplied).reversed());
+
+        long pending = apps.stream().filter(a -> a.getStatus() == ApplicationStatus.PENDING).count();
+        long interview = apps.stream().filter(a -> a.getStatus() == ApplicationStatus.INTERVIEW_SCHEDULED).count();
+        long accepted = apps.stream().filter(a -> a.getStatus() == ApplicationStatus.ACCEPTED).count();
+
+        model.addAttribute("title", "My dashboard");
+        model.addAttribute("applications", apps);
+        model.addAttribute("pendingCount", pending);
+        model.addAttribute("interviewCount", interview);
+        model.addAttribute("acceptedCount", accepted);
+        return "dashboard";
+    }
 }
