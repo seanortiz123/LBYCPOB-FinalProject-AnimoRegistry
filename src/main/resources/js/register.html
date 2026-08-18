@@ -19,3 +19,28 @@
         <button type="button" id="role-student" class="active">Student</button>
         <button type="button" id="role-officer">Org officer</button>
     </div>
+    <div class="panel">
+        <div class="form-error" id="register-error"></div>
+        <div class="form-success" id="register-success"></div>
+
+        <form id="register-form">
+            <div class="field-row">
+                <div class="field">
+                    <label for="idNumber">DLSU ID number</label>
+                    <input class="input" id="idNumber" placeholder="12345678" maxlength="8" required />
+                </div>
+                <div class="field">
+                    <label for="name">Full name</label>
+                    <input class="input" id="name" placeholder="Jose Rizal" required />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="email">DLSU email</label>
+                <input class="input" type="email" id="email" placeholder="jose_rizal@dlsu.edu.ph" required />
+            </div>
+
+            <div class="field">
+                <label for="password">Password (min. 8 characters)</label>
+                <input class="input" type="password" id="password" minlength="8" required />
+            </div>
