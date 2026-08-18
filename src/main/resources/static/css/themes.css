@@ -360,3 +360,56 @@ h1, h2, h3, h4 {
     margin-top: 6px;
     padding-right: 20px;
 }
+
+.booth-card .desc {
+    color: var(--muted);
+    font-size: 13.5px;
+    flex: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.ribbon {
+    position: absolute;
+    top: 16px; right: -6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px 4px 12px;
+    border-radius: 3px 0 0 3px;
+}
+.ribbon.open { background: var(--gold); color: #26200a; }
+.ribbon.closed { background: var(--surface-3); color: var(--muted); }
+
+/* slot meter — signature element */
+.meter-block { margin-top: 4px; }
+.meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted-2);
+    margin-bottom: 5px;
+}
+.meter-label .fill-num { color: var(--emerald-bright); }
+.meter {
+    height: 6px;
+    border-radius: 4px;
+    background: var(--surface-3);
+    overflow: hidden;
+    position: relative;
+}
+.meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--emerald-deep), var(--emerald-bright));
+    border-radius: 4px;
+}
+
+.booth-card .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
