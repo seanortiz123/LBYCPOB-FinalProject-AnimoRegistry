@@ -235,3 +235,154 @@ textarea.textarea { resize: vertical; min-height: 90px; }
     display: none;
 }
 .form-success.show { display: block; }
+
+/* ---------- hero ---------- */
+
+.hero {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto auto;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(20, 168, 102, 0.25), transparent 65%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.04;
+    max-width: 700px;
+}
+
+.hero p.lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 14px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.hero-stat .num {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    color: var(--gold);
+}
+.hero-stat .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+}
+
+/* ---------- filter chips ---------- */
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+    align-items: center;
+}
+
+.chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.chip:hover { border-color: var(--emerald); color: var(--text); }
+.chip.active { background: var(--emerald); border-color: var(--emerald); color: #06140d; }
+
+.search-input {
+    margin-left: auto;
+}
+
+/* ---------- badges (status) ---------- */
+
+.badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    white-space: nowrap;
+}
+.badge.PENDING { background: rgba(232, 196, 104, 0.15); color: var(--gold); }
+.badge.INTERVIEW_SCHEDULED { background: rgba(101, 170, 226, 0.15); color: #7fb7ea; }
+.badge.ACCEPTED { background: rgba(79, 209, 160, 0.15); color: var(--emerald-bright); }
+.badge.REJECTED { background: rgba(226, 102, 90, 0.15); color: var(--danger); }
+
+/* ---------- tabs ---------- */
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+}
+.tabs button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 4px;
+    margin-right: 22px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+.tabs button.active { color: var(--text); border-bottom-color: var(--gold); }
+
+/* ---------- switch ---------- */
+
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+.switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--surface-3);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.switch.on { background: var(--emerald); border-color: var(--emerald); }
+.switch .knob {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--text);
+    transition: left 0.15s;
+}
+.switch.on .knob { left: 22px; background: #06140d; }
