@@ -59,8 +59,8 @@ function renderNav(activePage) {
     let rightLinks = "";
     if (!s) {
         rightLinks = `
-      <a href="login.html" class="${activePage === "login" ? "active" : ""}">Log in</a>
-      <a href="register.html" class="${activePage === "register" ? "active" : ""}">Register</a>
+      <a href="../login.html" class="${activePage === "login" ? "active" : ""}">Log in</a>
+      <a href="../register.html" class="${activePage === "register" ? "active" : ""}">Register</a>
     `;
     } else if (s.role === "student") {
         rightLinks = `
@@ -80,7 +80,7 @@ function renderNav(activePage) {
         <a href="index.html" class="brand"><span class="dot"></span>AnimoRegistry</a>
         <div class="nav-links">
           <a href="index.html" class="${activePage === "home" ? "active" : ""}">Browse orgs</a>
-          <a href="about.html" class="${activePage === "about" ? "active" : ""}">About us</a>
+          <a href="../../../about.html" class="${activePage === "about" ? "active" : ""}">About us</a>
           ${rightLinks}
         </div>
       </div>
