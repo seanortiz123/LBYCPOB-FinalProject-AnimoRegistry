@@ -116,4 +116,28 @@ public class OfficerController {
         }
         return "redirect:/officer";
     }
+    @PostMapping("/applications/{id}/status")
+    public String updateApplicationStatus(@PathVariable Long id, @RequestParam ApplicationStatus status,
+                                          HttpSession session, RedirectAttributes redirectAttributes) {
+        if (requireOfficerOrgId(session) == null) return "redirect:/login";
+        try {
+            applicationService.updateStatus(id, status);
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
+
+    @PostMapping("/applications/{id}/interview")
+    public String scheduleInterview(@PathVariable Long id,
+                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime interviewSchedule,
+                                    HttpSession session, RedirectAttributes redirectAttributes) {
+        if (requireOfficerOrgId(session) == null) return "redirect:/login";
+        try {
+            applicationService.scheduleInterview(id, interviewSchedule);
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
 }
