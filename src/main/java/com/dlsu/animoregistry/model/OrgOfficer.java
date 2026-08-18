@@ -4,10 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * OOP CONCEPT - INHERITANCE:
+ * Inherits idNumber, name, dlsuEmail, password from DLSUUser, and adds
+ * org-specific data: which organization they represent and their position.
+ */
 @Entity
 public class OrgOfficer extends DLSUUser {
 
-    private String position;
+    private String position; // e.g. "President", "VP for Membership", "Committee Head"
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
@@ -40,6 +45,7 @@ public class OrgOfficer extends DLSUUser {
         this.organization = organization;
     }
 
+    // ---- Polymorphism: Officer-flavored dashboard ----
     @Override
     public String displayDashboard() {
         String orgName = organization != null ? organization.getName() : "(no organization assigned)";
