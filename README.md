@@ -33,7 +33,7 @@ Child Class (OrgOfficer): Inherits from DLSUUser but requires org-specific data,
 - Polymorphism: displayDashboard() for Applicant and Organization Officer
 - Abstraction: paymentMethod() for each organization's membership fee, implemented by Cash or DigitalBank
   
-### INITIAL CLASS IDEAS:
+### Classes:
 - User (Abstract): Handles basic DLSU credentials, authentication, and core profile attributes.
 - Applicant: Tracks submitted applications and interview schedules
 - Organization: Holds student group details, recruitment slots, and active applicants 	
@@ -41,16 +41,17 @@ Child Class (OrgOfficer): Inherits from DLSUUser but requires org-specific data,
 
 ### USER STORIES:
 (Student)
-- As a DLSU student, I want a one-stop app where I get to see all the available DLSU organizations/clubs that I am able to join
-- As a DLSU student, I want a one-stop app where I'm able to input different needed information for my organization applications like my ID number and DLSU email
-- As a Frosh or Undergraduate student, I want to track the real-time status of my submitted applications (e.g., Pending, Interview Scheduled, Accepted, Rejected) on a personal dashboard so that I know exactly where I stand in the recruitment process.
+- As a DLSU student, I want a one-stop app where I get to see all the available DLSU organizations/clubs that I am able to join.
+- As a DLSU student, I want to register with my DLSU ID number and DLSU email so my account is verified as an actual Lasallian before I can apply anywhere.
+- As a DLSU student, I want to submit an application with a short written response to an organization I'm interested in, so the organization has something to review.
+- As a Frosh or Undergraduate student, I want to track the real-time status of my submitted applications (Pending, Interview Scheduled, Accepted, Rejected) on a personal dashboard so that I know exactly where I stand in the recruitment process.
 
 
 (Organization)
-- As an Organization officer, I want an app where I am able to view different student applications and be able to accept or deny them.
+-As an Organization officer, I want an app where I am able to view different student applications and be able to accept or deny them.
+- As an Organization officer, I want to schedule an interview date and time for an applicant so I can move them through the recruitment pipeline.
 - As an Executive Board Member, I want to toggle our organization's registration status to "Closed" once the recruitment season is done so that students can no longer submit new sign-up forms.
-- As an Org Officer, I want to set a maximum membership cap for our specific committee during setup so that the app automatically stops accepting new applicants once our slots are completely filled.
-- As a Central Committee Member, I want to edit our organization's profile page (such as updating our logo, social media handles, or org description) so that our digital booth display remains accurate for incoming frosh.
+- As an Org Officer, I want to set a maximum membership cap for our organization during setup so that the app automatically stops accepting new applicants once our slots are completely filled.
 
 ### CORE FEATURES (Recommended):
 - Several webpages to navigate through each organization
