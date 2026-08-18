@@ -39,3 +39,44 @@
         No account yet? <a href="register.html" style="color:var(--gold)">Register here</a>
     </p>
 </main>
+<script src="js/api.js"></script>
+<script>
+    renderNav("login");
+    let role = "student";
+
+    document.getElementById("role-student").addEventListener("click", () => setRole("student"));
+    document.getElementById("role-officer").addEventListener("click", () => setRole("officer"));
+
+    function setRole(r) {
+        role = r;
+        document.getElementById("role-student").classList.toggle("active", r === "student");
+        document.getElementById("role-officer").classList.toggle("active", r === "officer");
+    }
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById("login-error");
+        hideError(errorEl);
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+            const path = role === "student" ? "/students/login" : "/officers/login";
+            const user = await api.post(path, { dlsuEmail: email, password });
+
+            session.set({
+                role,
+                id: user.id,
+                name: user.name,
+                organizationId: role === "officer" ? user.organization.id : undefined,
+            });
+
+            window.location.href = role === "student" ? "dashboard.html" : "officer.html";
+        } catch (err) {
+            showError(errorEl, err.message);
+        }
+    });
+</script>
+</body>
+</html>
