@@ -1,83 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My dashboard — AnimoRegistry</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css" />
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead(${title})}"></head>
 <body>
-<div id="nav-mount"></div>
+<nav th:replace="~{fragments/layout :: nav('dashboard')}"></nav>
 
 <main class="page-body">
-    <div class="wrap" style="padding-top:36px">
+    <div class="wrap" style="padding-top:28px">
         <span class="eyebrow">Applicant dashboard</span>
-        <h1 id="page-title" style="font-size:30px;margin-top:6px">My applications</h1>
-        <div class="stat-grid" id="stat-grid" style="margin:22px 0 30px"></div>
-        <div id="apps-list"></div>
-        <div class="loading-state" id="loading">Loading your applications…</div>
-        <div class="empty-state" id="empty" style="display:none">
-            <span class="eyebrow">Nothing here yet</span>
-            <p>You haven't applied to any organizations. <a href="static/static/js/index.html" style="color:var(--gold)">Browse orgs →</a></p>
+        <h1 style="margin-top:4px;margin-bottom:24px" th:text="'Welcome back, ' + ${currentName}">My applications</h1>
+
+        <div class="stat-grid" style="margin-bottom:28px">
+            <div class="stat"><div class="num" th:text="${#lists.size(applications)}">0</div><div class="label">Total</div></div>
+            <div class="stat"><div class="num" th:text="${pendingCount}">0</div><div class="label">Pending</div></div>
+            <div class="stat"><div class="num" th:text="${interviewCount}">0</div><div class="label">Interview</div></div>
+            <div class="stat"><div class="num" th:text="${acceptedCount}">0</div><div class="label">Accepted</div></div>
         </div>
-    </div>
-</main>
-
-<script src="../js/api.js"></script>
-<script>
-    async function init() {
-        renderNav("dashboard");
-        const s = requireRole("student");
-        if (!s) return;
-
-        document.getElementById("page-title").textContent = `Welcome back, ${s.name.split(" ")[0]}`;
-
-        let apps;
-        try {
-            apps = await api.get(`/applications/student/${s.id}`);
-        } catch (err) {
-            document.getElementById("loading").textContent = "Couldn't load your applications.";
-            return;
-        }
-        document.getElementById("loading").style.display = "none";
-        const counts = { PENDING: 0, INTERVIEW_SCHEDULED: 0, ACCEPTED: 0, REJECTED: 0 };
-        apps.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
-
-        document.getElementById("stat-grid").innerHTML = `
-        <div class="stat"><div class="num">${apps.length}</div><div class="label">Total applications</div></div>
-        <div class="stat"><div class="num">${counts.PENDING}</div><div class="label">Pending</div></div>
-        <div class="stat"><div class="num">${counts.INTERVIEW_SCHEDULED}</div><div class="label">Interview</div></div>
-        <div class="stat"><div class="num">${counts.ACCEPTED}</div><div class="label">Accepted</div></div>
-      `;
-
-        if (apps.length === 0) {
-            document.getElementById("empty").style.display = "block";
-            return;
-        }
-
-        document.getElementById("apps-list").innerHTML = apps
-            .sort((a, b) => new Date(b.dateApplied) - new Date(a.dateApplied))
-            .map(a => `
-          <div class="app-row">
-            <div class="app-row-top">
-              <div>
-                <div class="name">${escapeHtml(a.organization.name)}</div>
-                <div class="sub">Applied ${formatDate(a.dateApplied)}</div>
-              </div>
-              <span class="badge ${a.status}">${statusLabel(a.status)}</span>
-            </div>
-            ${a.interviewSchedule ? `<div class="sub" style="margin-top:8px">Interview: ${formatDate(a.interviewSchedule)}</div>` : ""}
-            ${a.answers ? `<div class="answers">${escapeHtml(a.answers)}</div>` : ""}
-            <div style="margin-top:10px">
-              <a href="org.html?id=${a.organization.id}" class="muted" style="font-size:13px">View organization →</a>
-            </div>
-          </div>
-        `).join("");
-    }
-
-    init();
-</script>
-</body>
-</html>
