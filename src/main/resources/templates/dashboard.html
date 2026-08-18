@@ -17,7 +17,7 @@
         </div>
         <div th:if="${#lists.isEmpty(applications)}" class="empty-state">
             <span class="eyebrow">Nothing here yet</span>
-            <p>You haven't applied to any organizations. <a th:href="@{/}" style="color:var(--gold)">Browse orgs →</a></p>
+            <p>You haven't applied to any organizations. <a th:href="@{/static}" style="color:var(--gold)">Browse orgs →</a></p>
         </div>
 
         <div class="app-row" th:each="a : ${applications}">
