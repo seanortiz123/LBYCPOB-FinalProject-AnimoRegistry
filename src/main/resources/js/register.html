@@ -118,3 +118,41 @@
         }
     }
     loadOrgs();
+    document.getElementById("register-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById("register-error");
+        const successEl = document.getElementById("register-success");
+        hideError(errorEl);
+        successEl.classList.remove("show");
+
+        const idNumber = document.getElementById("idNumber").value.trim();
+        const name = document.getElementById("name").value.trim();
+        const dlsuEmail = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+            if (role === "student") {
+                await api.post("/students/register", {
+                    idNumber, name, dlsuEmail, password,
+                    college: document.getElementById("college").value,
+                    yearLevel: document.getElementById("yearLevel").value,
+                });
+            } else {
+                const organizationId = document.getElementById("organization").value;
+                if (!organizationId) throw new Error("Pick an organization first.");
+                await api.post(`/officers/register/${organizationId}`, {
+                    idNumber, name, dlsuEmail, password,
+                    position: document.getElementById("position").value,
+                });
+            }
+
+            successEl.textContent = "Account created! Redirecting you to log in…";
+            successEl.classList.add("show");
+            setTimeout(() => { window.location.href = "login.html"; }, 1200);
+        } catch (err) {
+            showError(errorEl, err.message);
+        }
+    });
+</script>
+</body>
+</html>
