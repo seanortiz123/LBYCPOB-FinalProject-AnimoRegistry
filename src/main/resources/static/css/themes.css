@@ -490,3 +490,35 @@ textarea.textarea { resize: vertical; min-height: 90px; }
     display: none;
 }
 .form-success.show { display: block; }
+/* auth card */
+
+.auth-shell {
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.role-toggle {
+    display: flex;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 24px;
+}
+.role-toggle button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 9px 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.role-toggle button.active { background: var(--emerald); color: #06140d; }
+
