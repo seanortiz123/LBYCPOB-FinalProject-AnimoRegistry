@@ -64,3 +64,71 @@ h1, h2, h3, h4 {
 }
 
 .muted { color: var(--muted); }
+
+/* ---------- layout shells ---------- */
+
+.wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.page-body {
+    padding-bottom: 80px;
+}
+
+/* ---------- nav ---------- */
+
+.navbar {
+    border-bottom: 1px solid var(--line);
+    background: rgba(10, 23, 18, 0.85);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.navbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+}
+
+.brand {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232, 196, 104, 0.18);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-links a, .nav-links button {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.nav-links a:hover, .nav-links button:hover { color: var(--text); background: var(--surface-2); }
+.nav-links a.active { color: var(--text); background: var(--surface-2); }
