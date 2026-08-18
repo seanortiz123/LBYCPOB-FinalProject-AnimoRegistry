@@ -50,3 +50,55 @@ const session = {
         return !!s && s.role === "officer";
     },
 };
+function renderNav(activePage) {
+    const mount = document.getElementById("nav-mount");
+    if (!mount) return;
+
+    const s = session.get();
+
+    let rightLinks = "";
+    if (!s) {
+        rightLinks = `
+      <a href="login.html" class="${activePage === "login" ? "active" : ""}">Log in</a>
+      <a href="register.html" class="${activePage === "register" ? "active" : ""}">Register</a>
+    `;
+    } else if (s.role === "student") {
+        rightLinks = `
+      <a href="dashboard.html" class="${activePage === "dashboard" ? "active" : ""}">My dashboard</a>
+      <button id="nav-logout">Log out (${escapeHtml(s.name)})</button>
+    `;
+    } else {
+        rightLinks = `
+      <a href="officer.html" class="${activePage === "officer" ? "active" : ""}">Officer panel</a>
+      <button id="nav-logout">Log out (${escapeHtml(s.name)})</button>
+    `;
+    }
+
+    mount.innerHTML = `
+    <nav class="navbar">
+      <div class="wrap">
+        <a href="index.html" class="brand"><span class="dot"></span>AnimoRegistry</a>
+        <div class="nav-links">
+          <a href="index.html" class="${activePage === "home" ? "active" : ""}">Browse orgs</a>
+          ${rightLinks}
+        </div>
+      </div>
+    </nav>
+  `;
+
+    const logoutBtn = document.getElementById("nav-logout");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            session.clear();
+            window.location.href = "index.html";
+        });
+    }
+}
+function requireRole(role) {
+    const s = session.get();
+    if (!s || s.role !== role) {
+        window.location.href = "login.html";
+        return null;
+    }
+    return s;
+}
