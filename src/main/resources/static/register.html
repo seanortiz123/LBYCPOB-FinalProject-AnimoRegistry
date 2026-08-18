@@ -1,158 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register — AnimoRegistry</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css" />
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead(${title})}"></head>
 <body>
-<div id="nav-mount"></div>
-<main class="auth-shell">
-    <span class="eyebrow">First time here?</span>
+<nav th:replace="~{fragments/layout :: nav('register')}"></nav>
+
+<main class="auth-shell" style="max-width:480px">
+    <span class="eyebrow">First time here</span>
     <h1 style="font-size:28px;margin-top:6px">Create an account</h1>
     <p class="muted" style="margin-bottom:24px">Only official @dlsu.edu.ph emails and 8-digit ID numbers are accepted.</p>
 
-    <div class="role-toggle">
-        <button type="button" id="role-student" class="active">Student</button>
-        <button type="button" id="role-officer">Org officer</button>
-    </div>
     <div class="panel">
-        <div class="form-error" id="register-error"></div>
-        <div class="form-success" id="register-success"></div>
+        <div class="form-error show" th:if="${registerError}" th:text="${registerError}"></div>
 
-        <form id="register-form">
+        <div class="role-toggle">
+            <button type="button" id="role-tab-student" class="active" onclick="showRole('student')">Student</button>
+            <button type="button" id="role-tab-officer" onclick="showRole('officer')">Org officer</button>
+        </div>
+
+        <form id="form-student" th:action="@{/register/student}" method="post">
+            <div class="field-row">
+                <div class="field"><label>DLSU ID number</label><input class="input" name="idNumber" maxlength="8" required /></div>
+                <div class="field"><label>Full name</label><input class="input" name="name" required /></div>
+            </div>
+            <div class="field"><label>DLSU email</label><input class="input" type="email" name="dlsuEmail" required /></div>
+            <div class="field"><label>Password (min. 8 characters)</label><input class="input" type="password" name="password" minlength="8" required /></div>
             <div class="field-row">
                 <div class="field">
-                    <label for="idNumber">DLSU ID number</label>
-                    <input class="input" id="idNumber" placeholder="12345678" maxlength="8" required />
+                    <label>College</label>
+                    <select class="select" name="college">
+                        <option>CCS</option><option>COB</option><option>CLA</option><option>CEng</option>
+                        <option>COS</option><option>BAGCED</option><option>GCOE</option><option>RVR-COB</option>
+                    </select>
                 </div>
                 <div class="field">
-                    <label for="name">Full name</label>
-                    <input class="input" id="name" placeholder="Jose Rizal" required />
+                    <label>Year level</label>
+                    <select class="select" name="yearLevel">
+                        <option>1st Year</option><option>2nd Year</option><option>3rd Year</option>
+                        <option>4th Year</option><option>5th Year</option>
+                    </select>
                 </div>
             </div>
-
-            <div class="field">
-                <label for="email">DLSU email</label>
-                <input class="input" type="email" id="email" placeholder="jose_rizal@dlsu.edu.ph" required />
-            </div>
-
-            <div class="field">
-                <label for="password">Password (min. 8 characters)</label>
-                <input class="input" type="password" id="password" minlength="8" required />
-            </div>
-            <div id="student-fields">
-                <div class="field-row">
-                    <div class="field">
-                        <label for="college">College</label>
-                        <select class="select" id="college">
-                            <option>CLA</option>
-                            <option>COS</option>
-                            <option>GCOE</option>
-                            <option>RVR-COB</option>
-                            <option>SOE</option>
-                            <option>BAGCED</option>
-                            <option>CCS</option>
-                            <option>SHS</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="yearLevel">Year level</label>
-                        <select class="select" id="yearLevel">
-                            <option>1st Year</option>
-                            <option>2nd Year</option>
-                            <option>3rd Year</option>
-                            <option>4th Year</option>
-                            <option>5th Year and above</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div id="officer-fields" style="display:none">
-                <div class="field">
-                    <label for="organization">Organization</label>
-                    <select class="select" id="organization"></select>
-                </div>
-                <div class="field">
-                    <label for="position">Position</label>
-                    <input class="input" id="position" placeholder="Junior Finance Officer" />
-                </div>
-            </div>
-
             <button type="submit" class="btn btn-primary btn-block">Create account</button>
         </form>
-    </div>
-
-    <p class="muted" style="text-align:center;margin-top:18px;font-size:13.5px">
-        Already registered? <a href="login.html" style="color:var(--gold)">Log in</a>
-    </p>
-</main>
-<script src="../js/api.js"></script>
-<script>
-    renderNav("register");
-    let role = "student";
-
-    function setRole(r) {
-        role = r;
-        document.getElementById("role-student").classList.toggle("active", r === "student");
-        document.getElementById("role-officer").classList.toggle("active", r === "officer");
-        document.getElementById("student-fields").style.display = r === "student" ? "block" : "none";
-        document.getElementById("officer-fields").style.display = r === "officer" ? "block" : "none";
-    }
-
-    document.getElementById("role-student").addEventListener("click", () => setRole("student"));
-    document.getElementById("role-officer").addEventListener("click", () => setRole("officer"));
-
-    async function loadOrgs() {
-        try {
-            const orgs = await api.get("/organizations");
-            document.getElementById("organization").innerHTML = orgs
-                .map(o => `<option value="${o.id}">${escapeHtml(o.name)}</option>`)
-                .join("");
-        } catch (err) {
-            document.getElementById("organization").innerHTML = `<option value="">Couldn't load organizations</option>`;
-        }
-    }
-    loadOrgs();
-    document.getElementById("register-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const errorEl = document.getElementById("register-error");
-        const successEl = document.getElementById("register-success");
-        hideError(errorEl);
-        successEl.classList.remove("show");
-
-        const idNumber = document.getElementById("idNumber").value.trim();
-        const name = document.getElementById("name").value.trim();
-        const dlsuEmail = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        try {
-            if (role === "student") {
-                await api.post("/students/register", {
-                    idNumber, name, dlsuEmail, password,
-                    college: document.getElementById("college").value,
-                    yearLevel: document.getElementById("yearLevel").value,
-                });
-            } else {
-                const organizationId = document.getElementById("organization").value;
-                if (!organizationId) throw new Error("Pick an organization first.");
-                await api.post(`/officers/register/${organizationId}`, {
-                    idNumber, name, dlsuEmail, password,
-                    position: document.getElementById("position").value,
-                });
-            }
-
-            successEl.textContent = "Account created! Redirecting you to log in…";
-            successEl.classList.add("show");
-            setTimeout(() => { window.location.href = "login.html"; }, 1200);
-        } catch (err) {
-            showError(errorEl, err.message);
-        }
-    });
-</script>
-</body>
-</html>
