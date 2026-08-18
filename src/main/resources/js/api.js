@@ -24,3 +24,29 @@ const api = {
     patch: (path, body) => apiRequest("PATCH", path, body),
     del: (path) => apiRequest("DELETE", path),
 };
+const SESSION_KEY = "animoregistry.session";
+
+const session = {
+    get() {
+        try {
+            const raw = localStorage.getItem(SESSION_KEY);
+            return raw ? JSON.parse(raw) : null;
+        } catch {
+            return null;
+        }
+    },
+    set(data) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+    },
+    clear() {
+        localStorage.removeItem(SESSION_KEY);
+    },
+    isStudent() {
+        const s = session.get();
+        return !!s && s.role === "student";
+    },
+    isOfficer() {
+        const s = session.get();
+        return !!s && s.role === "officer";
+    },
+};
