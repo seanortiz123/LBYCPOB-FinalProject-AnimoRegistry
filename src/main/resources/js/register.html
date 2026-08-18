@@ -91,3 +91,30 @@
         Already registered? <a href="login.html" style="color:var(--gold)">Log in</a>
     </p>
 </main>
+<script src="js/api.js"></script>
+<script>
+    renderNav("register");
+    let role = "student";
+
+    function setRole(r) {
+        role = r;
+        document.getElementById("role-student").classList.toggle("active", r === "student");
+        document.getElementById("role-officer").classList.toggle("active", r === "officer");
+        document.getElementById("student-fields").style.display = r === "student" ? "block" : "none";
+        document.getElementById("officer-fields").style.display = r === "officer" ? "block" : "none";
+    }
+
+    document.getElementById("role-student").addEventListener("click", () => setRole("student"));
+    document.getElementById("role-officer").addEventListener("click", () => setRole("officer"));
+
+    async function loadOrgs() {
+        try {
+            const orgs = await api.get("/organizations");
+            document.getElementById("organization").innerHTML = orgs
+                .map(o => `<option value="${o.id}">${escapeHtml(o.name)}</option>`)
+                .join("");
+        } catch (err) {
+            document.getElementById("organization").innerHTML = `<option value="">Couldn't load organizations</option>`;
+        }
+    }
+    loadOrgs();
