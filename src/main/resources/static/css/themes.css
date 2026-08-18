@@ -1,0 +1,78 @@
+/* ==========================================================================
+   AnimoRegistry — shared styles
+   Theme: campus org-fair bulletin board. Dark emerald surface, streamer-gold
+   accent, booth-style cards with a pinned-flyer signature detail.
+   ========================================================================== */
+
+:root {
+    --bg: #0a1712;
+    --surface: #10231b;
+    --surface-2: #163020;
+    --surface-3: #1c3a27;
+    --line: #24402f;
+
+    --emerald: #14a866;
+    --emerald-deep: #0b5c39;
+    --emerald-bright: #4fd1a0;
+    --gold: #e8c468;
+    --gold-dim: #a98c4c;
+    --danger: #e2665a;
+
+    --text: #eaf3ec;
+    --muted: #8fa79a;
+    --muted-2: #5f7669;
+
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+    --radius: 14px;
+    --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background:
+            radial-gradient(1200px 600px at 90% -10%, rgba(20, 168, 102, 0.08), transparent 60%),
+            var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin: 0 0 0.4em;
+    letter-spacing: -0.01em;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.muted { color: var(--muted); }
+
+/* ---------- layout shells ---------- */
+
+.wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.page-body {
+    padding-bottom: 80px;
+}
