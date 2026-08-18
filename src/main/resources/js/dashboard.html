@@ -42,3 +42,42 @@
             return;
         }
         document.getElementById("loading").style.display = "none";
+        const counts = { PENDING: 0, INTERVIEW_SCHEDULED: 0, ACCEPTED: 0, REJECTED: 0 };
+        apps.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
+
+        document.getElementById("stat-grid").innerHTML = `
+        <div class="stat"><div class="num">${apps.length}</div><div class="label">Total applications</div></div>
+        <div class="stat"><div class="num">${counts.PENDING}</div><div class="label">Pending</div></div>
+        <div class="stat"><div class="num">${counts.INTERVIEW_SCHEDULED}</div><div class="label">Interview</div></div>
+        <div class="stat"><div class="num">${counts.ACCEPTED}</div><div class="label">Accepted</div></div>
+      `;
+
+        if (apps.length === 0) {
+            document.getElementById("empty").style.display = "block";
+            return;
+        }
+
+        document.getElementById("apps-list").innerHTML = apps
+            .sort((a, b) => new Date(b.dateApplied) - new Date(a.dateApplied))
+            .map(a => `
+          <div class="app-row">
+            <div class="app-row-top">
+              <div>
+                <div class="name">${escapeHtml(a.organization.name)}</div>
+                <div class="sub">Applied ${formatDate(a.dateApplied)}</div>
+              </div>
+              <span class="badge ${a.status}">${statusLabel(a.status)}</span>
+            </div>
+            ${a.interviewSchedule ? `<div class="sub" style="margin-top:8px">Interview: ${formatDate(a.interviewSchedule)}</div>` : ""}
+            ${a.answers ? `<div class="answers">${escapeHtml(a.answers)}</div>` : ""}
+            <div style="margin-top:10px">
+              <a href="org.html?id=${a.organization.id}" class="muted" style="font-size:13px">View organization →</a>
+            </div>
+          </div>
+        `).join("");
+    }
+
+    init();
+</script>
+</body>
+</html>
