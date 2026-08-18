@@ -98,3 +98,19 @@
             </form>
         </div>
     </div>
+    <script>
+        function showRole(role) {
+            document.getElementById('form-student').style.display = role === 'student' ? 'block' : 'none';
+            document.getElementById('form-officer').style.display = role === 'officer' ? 'block' : 'none';
+            document.getElementById('role-tab-student').classList.toggle('active', role === 'student');
+            document.getElementById('role-tab-officer').classList.toggle('active', role === 'officer');
+        }
+        function showOrgMode(mode) {
+            document.getElementById('form-officer-existing').style.display = mode === 'existing' ? 'block' : 'none';
+            document.getElementById('form-officer-new').style.display = mode === 'new' ? 'block' : 'none';
+            document.getElementById('org-tab-existing').classList.toggle('active', mode === 'existing');
+            document.getElementById('org-tab-new').classList.toggle('active', mode === 'new');
+        }
+    </script>
+</body>
+</html>
