@@ -230,3 +230,75 @@ h1, h2, h3, h4 {
     text-transform: uppercase;
     color: var(--muted-2);
 }
+
+/* ---------- filter chips ---------- */
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+    align-items: center;
+}
+
+.chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.chip:hover { border-color: var(--emerald); color: var(--text); }
+.chip.active { background: var(--emerald); border-color: var(--emerald); color: #06140d; }
+
+.search-input {
+    margin-left: auto;
+}
+
+/* ---------- booth card grid ---------- */
+
+.booth-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.booth-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.15s, border-color 0.15s;
+}
+
+.booth-card:hover { transform: translateY(-3px); border-color: var(--emerald); }
+
+.booth-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 20px;
+    width: 34px; height: 6px;
+    background: var(--gold);
+    border-radius: 0 0 4px 4px;
+}
+
+.booth-card .pin {
+    position: absolute;
+    top: 14px; right: 16px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--emerald-bright);
+    box-shadow: 0 0 0 4px rgba(79, 209, 160, 0.15);
+}
+
+.booth-card.closed .pin { background: var(--muted-2); box-shadow: 0 0 0 4px rgba(95, 118, 105, 0.15); }
