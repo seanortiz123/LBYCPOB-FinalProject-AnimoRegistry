@@ -16,20 +16,27 @@ public abstract class DLSUUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String idNumber;
-    private String name;
-    private String dlsuEmail;
-
     @JsonIgnore
     private String password;
 
     protected DLSUUser() {
-        }
+    }
+
+    private String idNumber;
+    private String name;
+    private String dlsuEmail;
+
+    protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
+        setIdNumber(idNumber);
+        this.name = name;
+        setDlsuEmail(dlsuEmail);
+        this.password = password;
+    }
 
     public void setIdNumber(String idNumber) {
         if (idNumber == null || !idNumber.matches("\\d{8}")) {
             throw new IllegalArgumentException(
-                    "Invalid DLSU ID Number. It must be exactly 8 digits (ex., 12501234).");
+                    "Invalid DLSU ID Number. It must be exactly 8 digits (e.g., 12345678).");
         }
         this.idNumber = idNumber;
     }
@@ -41,20 +48,13 @@ public abstract class DLSUUser {
     public void setDlsuEmail(String dlsuEmail) {
         if (dlsuEmail == null || !dlsuEmail.trim().toLowerCase().endsWith("@dlsu.edu.ph")) {
             throw new IllegalArgumentException(
-                    "Invalid email. Only @dlsu.edu.ph addresses may register.");
+                    "Invalid email. Only official @dlsu.edu.ph addresses may register.");
         }
         this.dlsuEmail = dlsuEmail.trim().toLowerCase();
     }
 
     public String getDlsuEmail() {
         return dlsuEmail;
-    }
-
-    protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
-        setIdNumber(idNumber);
-        this.name = name;
-        setDlsuEmail(dlsuEmail);
-        this.password = password;
     }
 
     public String getName() {
