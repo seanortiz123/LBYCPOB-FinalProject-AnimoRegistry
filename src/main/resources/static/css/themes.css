@@ -667,3 +667,17 @@ textarea.textarea { resize: vertical; min-height: 90px; }
     gap: 20px;
     align-items: start;
 }
+@media (max-width: 760px) {
+    .two-col { grid-template-columns: 1fr; }
+    .hero { padding: 44px 0 32px; }
+    .field-row { flex-direction: column; gap: 0; }
+}
+
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+}
