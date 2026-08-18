@@ -102,3 +102,39 @@ function requireRole(role) {
     }
     return s;
 }
+function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+function formatDate(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, {
+        month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit",
+    });
+}
+
+function statusLabel(status) {
+    const map = {
+        PENDING: "Pending",
+        INTERVIEW_SCHEDULED: "Interview scheduled",
+        ACCEPTED: "Accepted",
+        REJECTED: "Rejected",
+    };
+    return map[status] || status;
+}
+
+function showError(el, message) {
+    el.textContent = message;
+    el.classList.add("show");
+}
+
+function hideError(el) {
+    el.classList.remove("show");
+    el.textContent = "";
+}
