@@ -32,56 +32,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Organization lscs = new Organization(
-                "La Salle Computer Society (LSCS)",
-                "Academic",
-                "The official student organization for Computer Science, IT, and related programs in DLSU.",
-                50,
-                150.0,
-                PaymentType.CASH
-        );
-        lscs.setSocialMediaHandle("@dlsu.lscs");
-
-        Organization animoSys = new Organization(
-                "animo.sys",
-                "Academic",
-                "DLSU's organization for Software Technology students, focused on dev culture and hackathons.",
-                40,
-                200.0,
-                PaymentType.DIGITAL_BANK
-        );
-        animoSys.setSocialMediaHandle("@dlsu.animosys");
-
-        Organization gmg = new Organization(
-                "Green Media Group",
-                "Special Interest",
-                "DLSU's premier media and broadcasting organization.",
-                30,
-                100.0,
-                PaymentType.CASH
-        );
-        gmg.setSocialMediaHandle("@greenmediagroup");
-
-        organizationRepository.save(lscs);
-        organizationRepository.save(animoSys);
-        organizationRepository.save(gmg);
-
-        LasallianStudent juan = new LasallianStudent(
-                "12345678", "Juan Dela Cruz", "juan_delacruz@dlsu.edu.ph", "password123",
-                "CCS", "1st Year"
-        );
-        LasallianStudent maria = new LasallianStudent(
-                "23456789", "Maria Santos", "maria_santos@dlsu.edu.ph", "password123",
-                "COB", "2nd Year"
-        );
-        studentRepository.save(juan);
-        studentRepository.save(maria);
-
-        OrgOfficer officer = new OrgOfficer(
-                "34567890", "Anna Reyes", "anna_reyes@dlsu.edu.ph", "password123",
-                lscs, "VP for Membership"
-        );
-        officerRepository.save(officer);
 
         System.out.println("=======================================================");
         System.out.println(" AnimoRegistry seeded with sample organizations, ");
