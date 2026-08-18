@@ -98,7 +98,7 @@ function renderNav(activePage) {
 function requireRole(role) {
     const s = session.get();
     if (!s || s.role !== role) {
-        window.location.href = "login.html";
+        window.location.href = "about.html";
         return null;
     }
     return s;

@@ -24,12 +24,21 @@ public abstract class DLSUUser {
     private String password;
 
     protected DLSUUser() {
-        }
+        // required by JPA
+    }
 
+    protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
+        setIdNumber(idNumber);
+        this.name = name;
+        setDlsuEmail(dlsuEmail);
+        this.password = password;
+    }
+
+    // ---- Encapsulation: ID Number Verification ----
     public void setIdNumber(String idNumber) {
         if (idNumber == null || !idNumber.matches("\\d{8}")) {
             throw new IllegalArgumentException(
-                    "Invalid DLSU ID Number. It must be exactly 8 digits (ex., 12501234).");
+                    "Invalid DLSU ID Number. It must be exactly 8 digits (e.g., 12345678).");
         }
         this.idNumber = idNumber;
     }
@@ -38,23 +47,17 @@ public abstract class DLSUUser {
         return idNumber;
     }
 
+    // ---- Encapsulation: DLSU Email Validation ----
     public void setDlsuEmail(String dlsuEmail) {
         if (dlsuEmail == null || !dlsuEmail.trim().toLowerCase().endsWith("@dlsu.edu.ph")) {
             throw new IllegalArgumentException(
-                    "Invalid email. Only @dlsu.edu.ph addresses may register.");
+                    "Invalid email. Only official @dlsu.edu.ph addresses may register.");
         }
         this.dlsuEmail = dlsuEmail.trim().toLowerCase();
     }
 
     public String getDlsuEmail() {
         return dlsuEmail;
-    }
-
-    protected DLSUUser(String idNumber, String name, String dlsuEmail, String password) {
-        setIdNumber(idNumber);
-        this.name = name;
-        setDlsuEmail(dlsuEmail);
-        this.password = password;
     }
 
     public String getName() {
@@ -83,5 +86,9 @@ public abstract class DLSUUser {
         return id;
     }
 
+    /**
+     * Polymorphism: each concrete subclass returns a dashboard summary
+     * relevant to its own role (Applicant vs Organization Officer).
+     */
     public abstract String displayDashboard();
 }

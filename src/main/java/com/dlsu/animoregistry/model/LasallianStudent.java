@@ -4,13 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * OOP CONCEPT - INHERITANCE:
+ * Inherits idNumber, name, dlsuEmail, password (and their validation) from
+ * DLSUUser, and adds student-specific registration data.
+ */
 @Entity
 public class LasallianStudent extends DLSUUser {
-    private String college;
-    private String yearLevel;
+
+    private String college;     // e.g. CCS, COB, CLA
+    private String yearLevel;   // e.g. "1st Year", "4th Year"
+
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ApplicationForm> applications = new ArrayList<>();
 
     protected LasallianStudent() {
         super();
@@ -39,15 +50,11 @@ public class LasallianStudent extends DLSUUser {
         this.yearLevel = yearLevel;
     }
 
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<ApplicationForm> applications = new ArrayList<>();
-
     public List<ApplicationForm> getApplications() {
         return applications;
     }
 
-
+    // ---- Polymorphism: Applicant-flavored dashboard ----
     @Override
     public String displayDashboard() {
         long pending = applications.stream()
