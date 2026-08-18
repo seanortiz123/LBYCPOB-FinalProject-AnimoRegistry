@@ -84,4 +84,36 @@ public class OfficerController {
         }
         return "redirect:/officer";
     }
+    @PostMapping("/profile")
+    public String updateProfile(@RequestParam String category, @RequestParam String description,
+                                @RequestParam(required = false) String socialMediaHandle,
+                                @RequestParam(required = false) String logoUrl,
+                                HttpSession session, RedirectAttributes redirectAttributes) {
+        Long orgId = requireOfficerOrgId(session);
+        if (orgId == null) return "redirect:/login";
+        try {
+            Organization updates = new Organization(null, category, description, 0, 0, null);
+            updates.setSocialMediaHandle(socialMediaHandle);
+            updates.setLogoUrl(logoUrl);
+            organizationService.updateProfile(orgId, updates);
+            redirectAttributes.addFlashAttribute("officerSuccess", "Profile updated.");
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
+
+    @PostMapping("/collect-fee")
+    public String collectFee(@RequestParam String payerName, HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+        Long orgId = requireOfficerOrgId(session);
+        if (orgId == null) return "redirect:/login";
+        try {
+            String receipt = organizationService.collectMembershipFee(orgId, payerName);
+            redirectAttributes.addFlashAttribute("feeReceipt", receipt);
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
 }
