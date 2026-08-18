@@ -59,4 +59,29 @@ public class OfficerController {
         model.addAttribute("statuses", ApplicationStatus.values());
         return "officer";
     }
+    @PostMapping("/registration-status")
+    public String setRegistrationStatus(@RequestParam boolean open, HttpSession session,
+                                        RedirectAttributes redirectAttributes) {
+        Long orgId = requireOfficerOrgId(session);
+        if (orgId == null) return "redirect:/login";
+        try {
+            organizationService.setRegistrationOpen(orgId, open);
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
+
+    @PostMapping("/membership-cap")
+    public String setMembershipCap(@RequestParam int membershipCap, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
+        Long orgId = requireOfficerOrgId(session);
+        if (orgId == null) return "redirect:/login";
+        try {
+            organizationService.setMembershipCap(orgId, membershipCap);
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("officerError", ex.getMessage());
+        }
+        return "redirect:/officer";
+    }
 }
