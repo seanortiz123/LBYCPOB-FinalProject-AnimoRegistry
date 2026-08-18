@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in — AnimoRegistry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<main class="auth-shell">
+    <span class="eyebrow">Welcome back</span>
+    <h1 style="font-size:28px;margin-top:6px">Log in</h1>
+    <p class="muted" style="margin-bottom:24px">Use your DLSU email to pick up where you left off.</p>
+    <div class="role-toggle">
+        <button type="button" id="role-student" class="active">Student</button>
+        <button type="button" id="role-officer">Org officer</button>
+    </div>
+
+    <div class="panel">
+        <div class="form-error" id="login-error"></div>
+        <form id="login-form">
+            <div class="field">
+                <label for="email">DLSU email</label>
+                <input class="input" type="email" id="email" placeholder="juan_delacruz@dlsu.edu.ph" required />
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input class="input" type="password" id="password" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+    </div>
+
+    <p class="muted" style="text-align:center;margin-top:18px;font-size:13.5px">
+        No account yet? <a href="register.html" style="color:var(--gold)">Register here</a>
+    </p>
+</main>
+<script src="js/api.js"></script>
+<script>
+    renderNav("login");
+    let role = "student";
+
+    document.getElementById("role-student").addEventListener("click", () => setRole("student"));
+    document.getElementById("role-officer").addEventListener("click", () => setRole("officer"));
+
+    function setRole(r) {
+        role = r;
+        document.getElementById("role-student").classList.toggle("active", r === "student");
+        document.getElementById("role-officer").classList.toggle("active", r === "officer");
+    }
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById("login-error");
+        hideError(errorEl);
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+            const path = role === "student" ? "/students/login" : "/officers/login";
+            const user = await api.post(path, { dlsuEmail: email, password });
+
+            session.set({
+                role,
+                id: user.id,
+                name: user.name,
+                organizationId: role === "officer" ? user.organization.id : undefined,
+            });
+
+            window.location.href = role === "student" ? "dashboard.html" : "officer.html";
+        } catch (err) {
+            showError(errorEl, err.message);
+        }
+    });
+</script>
+</body>
+</html>
